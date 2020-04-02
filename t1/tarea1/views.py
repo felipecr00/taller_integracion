@@ -8,14 +8,12 @@ def generate_request(url, params={}):
     if response.status_code == 200:
         return response.json()
 
-
 def get_episodes(url, params={}):
     response = generate_request(url, params)
     if response:
         user = response.get('results')
         return user
     return ''
-
 
 def get_info(url, params={}):
     response = generate_request(url, params)
@@ -140,10 +138,12 @@ def lugar(request, id):
         lista_re_id.append(r.split("/")[-1])
     re_interes = ",".join(map(str, lista_re_id))
 
-    info_chars = get_info(f'https://rickandmortyapi.com/api/character/{re_interes}')
-
-    for c in info_chars:
-        lista_name_residents.append(c["name"])
+    if residents != []:
+        info_chars = get_info(f'https://rickandmortyapi.com/api/character/{re_interes}')
+        for c in info_chars:
+            lista_name_residents.append(c["name"])
+    else:
+        lista_name_residents.append("Sin habitantes")
 
     final_list = list(map(list, zip(lista_name_residents, lista_re_id)))
 
