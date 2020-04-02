@@ -17,25 +17,37 @@
         <div class="mt-3">
             <h3>Resultados asociados a <b>personajes</b></h3>
                 <ul>
-                    {% for per in lista_personajes%}
-                    <li><a href="/character/{{per.1}}">{{per.0}}</a></li>
-                    {% endfor %}
+                    {% if lista_personajes.0 != "Not found"%}
+                        {% for per in lista_personajes%}
+                            <li><a href="/character/{{per.1}}">{{per.0}}</a></li>
+                        {% endfor %}
+                    {% else %}
+                        <li>No hemos encontrado resultados Morty, no te pases de listo (o de Morty)</li>
+                    {% endif %}
                 </ul>
         </div>
         <div class="mt-3">
             <h3>Resultados asociados a <b>episodios</b></h3>
                 <ul>
+                    {% if lista_personajes.0 != "Not found"%}
                     {% for ep in lista_episodios%}
                     <li><a href="/episode/{{ep.1}}">{{ep.0}}</a></li>
                     {% endfor %}
+                    {% else %}
+                        <li>No hemos encontrado resultados Morty, no te pases de listo (o de Morty)</li>
+                    {% endif %}
                 </ul>
         </div>
         <div class="mt-3">
             <h3>Resultados asociados a <b>lugares</b></h3>
                 <ul>
+                    {% if lista_personajes.0 != "Not found"%}
                     {% for loc in lista_lugares%}
                     <li><a href="/location/{{loc.1}}">{{loc.0}}</a></li>
                     {% endfor %}
+                    {% else %}
+                        <li>No hemos encontrado resultados Morty, no te pases de listo (o de Morty)</li>
+                    {% endif %}
                 </ul>
         </div>
 

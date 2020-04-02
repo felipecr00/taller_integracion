@@ -27,8 +27,11 @@ def get_info(url, params={}):
 def get_search(url, params={}):
     response = generate_request(url, params)
     if response:
-        info = response.get('info')
-        return info
+        if response.get('error'):
+            return "error"
+        else:
+            info = response.get('info')
+            return info
     return ''
 
 ## Llamadas a la API
@@ -154,29 +157,36 @@ def search(request, find):
     info_lugares = get_search(f'https://rickandmortyapi.com/api/location/?name={find.encode("utf-8").decode()}')
 
     # Se extrae el num de paginas que tiene info
-    num_pag_chars = info_chars["pages"]
-    num_pag_eps = info_eps["pages"]
-    num_pag_lugares = info_lugares["pages"]
-
     lista_personajes = []
     lista_epis = []
     lista_locations = []
 
-    for i in range(1, num_pag_chars + 1):
-        info_page = get_info(f'https://rickandmortyapi.com/api/character/?page={i}&name={find.encode("utf-8").decode()}')
-        for j in info_page["results"]:
-            lista_personajes.append([j["name"], j["id"]])
+    if info_chars != "":
+        num_pag_chars = info_chars["pages"]
+        for i in range(1, num_pag_chars + 1):
+            info_page = get_info(f'https://rickandmortyapi.com/api/character/?page={i}&name={find.encode("utf-8").decode()}')
+            for j in info_page["results"]:
+                lista_personajes.append([j["name"], j["id"]])
+    else:
+        lista_personajes.append("Not found")
 
-    for i in range(1, num_pag_eps + 1):
-        info_page = get_info(f'https://rickandmortyapi.com/api/episode/?page={i}&name={find.encode("utf-8").decode()}')
-        for j in info_page["results"]:
-            lista_epis.append([j["name"], j["id"]])
+    if info_eps != "":
+        num_pag_eps = info_eps["pages"]
+        for i in range(1, num_pag_eps + 1):
+            info_page = get_info(f'https://rickandmortyapi.com/api/episode/?page={i}&name={find.encode("utf-8").decode()}')
+            for j in info_page["results"]:
+                lista_epis.append([j["name"], j["id"]])
+    else:
+        lista_epis.append("Not found")
 
-    for i in range(1, num_pag_lugares + 1):
-        info_page = get_info(f'https://rickandmortyapi.com/api/location/?page={i}&name={find.encode("utf-8").decode()}')
-        for j in info_page["results"]:
-            lista_locations.append([j["name"], j["id"]])
-
+    if info_lugares != "":
+        num_pag_lugares = info_lugares["pages"]
+        for i in range(1, num_pag_lugares + 1):
+            info_page = get_info(f'https://rickandmortyapi.com/api/location/?page={i}&name={find.encode("utf-8").decode()}')
+            for j in info_page["results"]:
+                lista_locations.append([j["name"], j["id"]])
+    else:
+        lista_locations.append("Not found")
 
 
     return render(request, "search.html", {"lista_personajes": lista_personajes,
