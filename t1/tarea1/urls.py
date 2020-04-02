@@ -24,5 +24,6 @@ urlpatterns = [
     path('episode/<int:id>', views.info_episodio),
     path('character/<int:id>', views.character),
     path('location/<int:id>', views.lugar),
+    path('search/<str:find>', views.search),
     # path('admin/', admin.site.urls),
 ]

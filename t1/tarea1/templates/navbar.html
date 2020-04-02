@@ -1,8 +1,29 @@
 
 <body>
-<nav class="navbar navbar-light " style="background-color: #e3f2fd;">
-  <a class="navbar-brand mb-0 h1" href="/">
-    Inicio
-  </a>
-</nav>
+
+  <nav class="navbar navbar-light " style="background-color: #e3f2fd;">
+    <a class="navbar-brand mb-0 h1" href="/">Inicio</a>
+    <form id="search_form"  class="form-inline" onsubmit="yourFunction()">
+     <input class="form-control mr-sm-2" type="text" name="keywords" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0"
+                type="submit"
+                id="search">
+          Search
+        </button>
+
+    </form>
+  </nav>
+  <script>
+    function yourFunction(){
+    var action_src = "/search/" + document.getElementsByName("keywords")[0].value;
+    var your_form = document.getElementById('search_form');
+    your_form.action = action_src ;
+}
+  </script>
+
+
 </body>
+
+
+
+

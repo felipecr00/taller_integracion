@@ -24,6 +24,13 @@ def get_info(url, params={}):
         return response
     return ''
 
+def get_search(url, params={}):
+    response = generate_request(url, params)
+    if response:
+        info = response.get('info')
+        return info
+    return ''
+
 ## Llamadas a la API
 episodios_1 = get_episodes('https://rickandmortyapi.com/api/episode?page=1')
 episodios_2 = get_episodes('https://rickandmortyapi.com/api/episode?page=2')
@@ -140,3 +147,39 @@ def lugar(request, id):
 
     return render(request, "location.html", {"name": name, "dimension": dimension, "type": type, "residents": final_list})
 
+def search(request, find):
+    # Hacemos 3 request para obtener personajes, episodios y lugares
+    info_chars = get_search(f'https://rickandmortyapi.com/api/character/?name={find.encode("utf-8").decode()}')
+    info_eps = get_search(f'https://rickandmortyapi.com/api/episode/?name={find.encode("utf-8").decode()}')
+    info_lugares = get_search(f'https://rickandmortyapi.com/api/location/?name={find.encode("utf-8").decode()}')
+
+    # Se extrae el num de paginas que tiene info
+    num_pag_chars = info_chars["pages"]
+    num_pag_eps = info_eps["pages"]
+    num_pag_lugares = info_lugares["pages"]
+
+    lista_personajes = []
+    lista_epis = []
+    lista_locations = []
+
+    for i in range(1, num_pag_chars + 1):
+        info_page = get_info(f'https://rickandmortyapi.com/api/character/?page={i}&name={find.encode("utf-8").decode()}')
+        for j in info_page["results"]:
+            lista_personajes.append([j["name"], j["id"]])
+
+    for i in range(1, num_pag_eps + 1):
+        info_page = get_info(f'https://rickandmortyapi.com/api/episode/?page={i}&name={find.encode("utf-8").decode()}')
+        for j in info_page["results"]:
+            lista_epis.append([j["name"], j["id"]])
+
+    for i in range(1, num_pag_lugares + 1):
+        info_page = get_info(f'https://rickandmortyapi.com/api/location/?page={i}&name={find.encode("utf-8").decode()}')
+        for j in info_page["results"]:
+            lista_locations.append([j["name"], j["id"]])
+
+
+
+    return render(request, "search.html", {"lista_personajes": lista_personajes,
+                                           "lista_episodios": lista_epis,
+                                           "lista_lugares": lista_locations,
+                                           "find": find})
