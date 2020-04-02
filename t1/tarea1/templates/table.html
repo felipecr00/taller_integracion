@@ -1,0 +1,25 @@
+
+
+<body>
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Episodio</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Fecha</th>
+          <th scope="col">Código</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for i in episodios %}
+          <tr>
+              <th scope="row">{{i.0}}</th>
+              <td><a href="episode/{{i.0}}">{{i.1}}</a></td>
+              <td>{{i.2}}</td>
+              <td>{{i.3}}</td>
+          </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+</body>
+

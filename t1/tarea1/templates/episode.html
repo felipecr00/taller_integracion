@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Episodio</title>
+    {% load bootstrap4 %}
+   {# CSS Bootstrap #}
+   {% bootstrap_css %}
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        {%include "navbar.html" %}
+        <div class="container d-flex justify-content-center">
+            <div class="card mt-4 " style="width: 50rem">
+              <div class="card-body">
+                <h5 class="card-title"><b>Nombre del episodio:</b> {{ name }}</h5>
+                <p class="card-text">Hemos encontrado la siguiente información del episodio:</p>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"><b>Air date:</b>  {{ air_date }}</li>
+                <li class="list-group-item"><b>Codigo de episodio:</b> {{ episode }}</li>
+                <li class="list-group-item">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Personajes</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      {% for c in characters%}
+                        <tr>
+                          <td><i class="fa fa-user"></i> <a href="/character/{{c.1}}" class="card-link"> {{c.0}}</a></td>
+                        </tr>
+                      {% endfor %}
+                      </tbody>
+                    </table>
+                </li>
+              </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Personaje</title>
+    {% load bootstrap4 %}
+   {# CSS Bootstrap #}
+   {% bootstrap_css %}
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mb-4">
+        {%include "navbar.html" %}
+        <div class="d-flex justify-content-center mt-4 mb-4 ">
+                <div class="card" style="width: 50rem;">
+                  <img src="{{image}}" class="card-img-top" alt="..." style="width: 100%;height: 17vw;object-fit: scale-down;">
+                  <div class="card-body">
+                    <h3 class="card-title">{{name}}</h3>
+                    <p class="card-text">Hemos encontrado la siguiente información sobre <b>{{name}}</b></p>
+                  </div>
+                  <ul class="list-group list-group-flush">
+                      <li class="list-group-item"><b>Status: </b>{{status}}</li>
+                      <li class="list-group-item"><b>Species:</b> {{species}}</li>
+                      <li class="list-group-item"><b>Type:   </b> {{type}}</li>
+                      <li class="list-group-item"><b>Gender: </b>{{gender}}</li>
+                      <li class="list-group-item"><b>Origin: </b><a href="/location/{{origin.1}}" class="card-link"> {{origin.0}}</a></li>
+                      <li class="list-group-item"><b>Location: </b><a href="/location/{{location.1}}" class="card-link"> {{location.0}}</a></li>
+                      <li class="list-group-item">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th scope="col">Episodios</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          {% for e in episodes%}
+                            <tr>
+                              <td><i class="fa fa-film"></i> <a href="/episode/{{e.1}}" class="card-link"> {{e.0}}</a></td>
+                            </tr>
+                          {% endfor %}
+                          </tbody>
+                        </table>
+                    </li>
+                  </ul>
+                </div>
+        </div>
+    </div>
+
+</body>
+</html>
