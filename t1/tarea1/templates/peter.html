@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Peter la Anguila</title>
+        {% load bootstrap4 %}
+   {# CSS Bootstrap #}
+   {% bootstrap_css %}
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mb-4">
+        {%include "navbar.html" %}
+        <div class="d-flex justify-content-center mt-4 mb-4 ">
+                <div class="card" style="width: 50rem;">
+                  <img src="https://res.cloudinary.com/dpdpyrrix/image/upload/v1585921254/IMG_0629_ahfsg7.jpg" class="card-img-top" alt="..." style="width: 100%;padding-top:5vw;height: 15vw;object-fit: scale-down;transform:rotate(90deg);">
+                  <div class="card-body">
+                    <h3 class="card-title">Pedro</h3>
+                    <p class="card-text">Hemos encontrado la siguiente información sobre <b>Pedro</b></p>
+                  </div>
+                  <ul class="list-group list-group-flush">
+                      <li class="list-group-item"><b>Status: </b>Alive</li>
+                      <li class="list-group-item"><b>Species:</b> Anguilliformes</li>
+                      <li class="list-group-item"><b>Type:   </b> Beauty Anguilla</li>
+                      <li class="list-group-item"><b>Gender: </b>Unknown</li>
+                      <li class="list-group-item"><b>Origin: </b><a href="/location/{{1}}" class="card-link"> Earth (C-137)</a></li>
+                      <li class="list-group-item"><b>Location: </b><a href="/" class="card-link"> Huechuraba</a></li>
+                      <li class="list-group-item">
+                    </li>
+                  </ul>
+                </div>
+        </div>
+    </div>
+</body>
+</html>

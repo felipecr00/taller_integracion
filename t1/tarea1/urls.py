@@ -25,5 +25,6 @@ urlpatterns = [
     path('character/<int:id>', views.character),
     path('location/<int:id>', views.lugar),
     path('search/<str:find>', views.search),
+    path('peter/', views.pedro),
     # path('admin/', admin.site.urls),
 ]

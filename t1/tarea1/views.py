@@ -170,6 +170,7 @@ def search(request, find):
     else:
         lista_personajes.append("Not found")
 
+    # print(info_eps.__class__)
     if info_eps != "":
         num_pag_eps = info_eps["pages"]
         for i in range(1, num_pag_eps + 1):
@@ -179,6 +180,8 @@ def search(request, find):
     else:
         lista_epis.append("Not found")
 
+    # print("los lugares que llegan son:")
+    # print(info_lugares.__class__)
     if info_lugares != "":
         num_pag_lugares = info_lugares["pages"]
         for i in range(1, num_pag_lugares + 1):
@@ -193,3 +196,6 @@ def search(request, find):
                                            "lista_episodios": lista_epis,
                                            "lista_lugares": lista_locations,
                                            "find": find})
+
+def pedro(request):
+    return render(request, "peter.html")

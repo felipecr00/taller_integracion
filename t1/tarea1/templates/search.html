@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Tarea 1</title>
+    <link href="https://emoji-css.afeld.me/emoji.css" rel="stylesheet">
             {% load bootstrap4 %}
    {# CSS Bootstrap #}
    {% bootstrap_css %}
@@ -22,33 +23,40 @@
                             <li><a href="/character/{{per.1}}">{{per.0}}</a></li>
                         {% endfor %}
                     {% else %}
-                        <li>No hemos encontrado resultados Morty, no te pases de listo (o de Morty)</li>
+                        <li>No hemos encontrado resultados Morty, no te pases de listo (o de Anguila)</li>
                     {% endif %}
                 </ul>
         </div>
         <div class="mt-3">
             <h3>Resultados asociados a <b>episodios</b></h3>
                 <ul>
-                    {% if lista_personajes.0 != "Not found"%}
+                    {% if lista_episodios.0 != "Not found"%}
                     {% for ep in lista_episodios%}
                     <li><a href="/episode/{{ep.1}}">{{ep.0}}</a></li>
                     {% endfor %}
                     {% else %}
-                        <li>No hemos encontrado resultados Morty, no te pases de listo (o de Morty)</li>
+                        <li>No hemos encontrado resultados Morty, no te pases de listo (o de Anguila)</li>
                     {% endif %}
                 </ul>
         </div>
         <div class="mt-3">
             <h3>Resultados asociados a <b>lugares</b></h3>
                 <ul>
-                    {% if lista_personajes.0 != "Not found"%}
+                    {% if lista_lugares.0 != "Not found"%}
                     {% for loc in lista_lugares%}
                     <li><a href="/location/{{loc.1}}">{{loc.0}}</a></li>
                     {% endfor %}
                     {% else %}
-                        <li>No hemos encontrado resultados Morty, no te pases de listo (o de Morty)</li>
+                        <li>No hemos encontrado resultados Morty, no te pases de listo (o de Anguila)</li>
                     {% endif %}
                 </ul>
+        </div>
+
+        <div class="mt-3">
+        {% if find == 'pedro'%}
+            <h3>Vaya vaya, parece que algo hemos encontrado para {{find}} <i class="em em-face_with_monocle" aria-role="presentation" aria-label="FACE WITH MONOCLE"></i></h3>
+            <a href="/peter">Pedro</a>
+            {% endif %}
         </div>
 
 
