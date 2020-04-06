@@ -3,6 +3,10 @@ import requests
 
 # Aqui dejare los consumos de la API
 
+# https://integracion-rick-morty-api.herokuapp.com/api/
+# https://rickandmortyapi.com/api
+API_REQUEST = 'https://integracion-rick-morty-api.herokuapp.com/api'
+
 def generate_request(url, params={}):
     response = requests.get(url, params=params)
     if response.status_code == 200:
@@ -33,8 +37,8 @@ def get_search(url, params={}):
     return ''
 
 ## Llamadas a la API
-episodios_1 = get_episodes('https://rickandmortyapi.com/api/episode?page=1')
-episodios_2 = get_episodes('https://rickandmortyapi.com/api/episode?page=2')
+episodios_1 = get_episodes(f'{API_REQUEST}/episode?page=1')
+episodios_2 = get_episodes(f'{API_REQUEST}/episode?page=2')
 
 list_complete_episodes = episodios_1 + episodios_2
 lista_named_epis = []
@@ -51,7 +55,7 @@ def listado_episodios(request):
 
 
 def info_episodio(request, id):
-    info = get_info(f'https://rickandmortyapi.com/api/episode/{id}')
+    info = get_info(f'{API_REQUEST}/episode/{id}')
 
     name = info["name"]
     air_date = info["air_date"]
@@ -82,7 +86,7 @@ def info_episodio(request, id):
                                             "characters": final_list})
 
 def character(request, id):
-    info = get_info(f'https://rickandmortyapi.com/api/character/{id}')
+    info = get_info(f'{API_REQUEST}/character/{id}')
     name =info["name"]
     status =info["status"]
     species = info["species"]
@@ -103,7 +107,7 @@ def character(request, id):
     eps_interes = ",".join(map(str, lista_episodios))
 
     # realizo request con los datos de todos los ids
-    info_eps = get_info(f'https://rickandmortyapi.com/api/episode/{eps_interes}')
+    info_eps = get_info(f'{API_REQUEST}/episode/{eps_interes}')
 
     if info_eps.__class__ is  dict:
         lista_name_eps.append(info_eps["name"])
@@ -125,7 +129,7 @@ def character(request, id):
 
 
 def lugar(request, id):
-    info = get_info(f'https://rickandmortyapi.com/api/location/{id}')
+    info = get_info(f'{API_REQUEST}/location/{id}')
     name = info["name"]
     type = info["type"]
     dimension = info["dimension"]
@@ -139,7 +143,7 @@ def lugar(request, id):
     re_interes = ",".join(map(str, lista_re_id))
 
     if residents != []:
-        info_chars = get_info(f'https://rickandmortyapi.com/api/character/{re_interes}')
+        info_chars = get_info(f'{API_REQUEST}/character/{re_interes}')
         for c in info_chars:
             lista_name_residents.append(c["name"])
     else:
@@ -152,9 +156,9 @@ def lugar(request, id):
 
 def search(request, find):
     # Hacemos 3 request para obtener personajes, episodios y lugares
-    info_chars = get_search(f'https://rickandmortyapi.com/api/character/?name={find.encode("utf-8").decode()}')
-    info_eps = get_search(f'https://rickandmortyapi.com/api/episode/?name={find.encode("utf-8").decode()}')
-    info_lugares = get_search(f'https://rickandmortyapi.com/api/location/?name={find.encode("utf-8").decode()}')
+    info_chars = get_search(f'{API_REQUEST}/character/?name={find.encode("utf-8").decode()}')
+    info_eps = get_search(f'{API_REQUEST}/episode/?name={find.encode("utf-8").decode()}')
+    info_lugares = get_search(f'{API_REQUEST}/location/?name={find.encode("utf-8").decode()}')
 
     # Se extrae el num de paginas que tiene info
     lista_personajes = []
@@ -164,7 +168,7 @@ def search(request, find):
     if info_chars != "":
         num_pag_chars = info_chars["pages"]
         for i in range(1, num_pag_chars + 1):
-            info_page = get_info(f'https://rickandmortyapi.com/api/character/?page={i}&name={find.encode("utf-8").decode()}')
+            info_page = get_info(f'{API_REQUEST}/character/?page={i}&name={find.encode("utf-8").decode()}')
             for j in info_page["results"]:
                 lista_personajes.append([j["name"], j["id"]])
     else:
@@ -174,7 +178,7 @@ def search(request, find):
     if info_eps != "":
         num_pag_eps = info_eps["pages"]
         for i in range(1, num_pag_eps + 1):
-            info_page = get_info(f'https://rickandmortyapi.com/api/episode/?page={i}&name={find.encode("utf-8").decode()}')
+            info_page = get_info(f'{API_REQUEST}/episode/?page={i}&name={find.encode("utf-8").decode()}')
             for j in info_page["results"]:
                 lista_epis.append([j["name"], j["id"]])
     else:
@@ -185,7 +189,7 @@ def search(request, find):
     if info_lugares != "":
         num_pag_lugares = info_lugares["pages"]
         for i in range(1, num_pag_lugares + 1):
-            info_page = get_info(f'https://rickandmortyapi.com/api/location/?page={i}&name={find.encode("utf-8").decode()}')
+            info_page = get_info(f'{API_REQUEST}/location/?page={i}&name={find.encode("utf-8").decode()}')
             for j in info_page["results"]:
                 lista_locations.append([j["name"], j["id"]])
     else:
