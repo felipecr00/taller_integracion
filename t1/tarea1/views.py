@@ -73,7 +73,7 @@ def info_episodio(request, id):
 
 
     # realizo request con los datos de todos los ids
-    info_chars = get_info(f'https://rickandmortyapi.com/api/character/{chars_interes}')
+    info_chars = get_info(f'{API_REQUEST}/character/{chars_interes}')
 
     for ic in info_chars:
         lista_name_characters.append(ic["name"])
