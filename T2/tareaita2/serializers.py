@@ -1,12 +1,8 @@
 from rest_framework import serializers
-from .models import Hamburguesa, Ingrediente, IngredienteEnHamburguesa
+from .models import Hamburguesa, Ingrediente
 
-class IngredientsEnHamburguesaSerializer(serializers.ModelSerializer):
 
-    class Meta:
-        model = IngredienteEnHamburguesa
-        fields = ['path']
-        #fields = '__all__'
+
 
 
 class HamburguesaSerializer(serializers.ModelSerializer):

@@ -1,16 +1,16 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
-from . models import Hamburguesa, Ingrediente, IngredienteEnHamburguesa
-from . serializers import HamburguesaSerializer, IngredienteSerializer, IngredientsEnHamburguesaSerializer
+from . models import Hamburguesa, Ingrediente
+from . serializers import HamburguesaSerializer, IngredienteSerializer
 from django.shortcuts import render
 from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser
 from rest_framework import status
 from rest_framework.decorators import api_view
 
-#PATH = 'https://tarea2-01.herokuapp.com/api/ingrediente/'
-PATH = "http://127.0.0.1:8000/api/ingrediente/"
+PATH = 'https://tarea2-01.herokuapp.com/api/ingrediente/'
+#PATH = "http://127.0.0.1:8000/api/ingrediente/"
 
 
 @api_view(['GET', 'POST'])
@@ -21,6 +21,13 @@ def hamburguesa_list(request):
     if request.method == 'GET':
         hamburguesa = Hamburguesa.objects.all()
         serializer = HamburguesaSerializer(hamburguesa, many=True)
+
+        for burger in serializer.data:
+            lista_url = []
+            if burger["ingredientes"] != []:
+                for ing in burger["ingredientes"]:
+                    lista_url.append({ "path": f"{PATH}{ing}"})
+                burger["ingredientes"] = lista_url
         return JsonResponse(serializer.data, safe=False)
 
     elif request.method == 'POST':
@@ -80,19 +87,18 @@ def ingrediente_en_hamurguesa_detail(request, id1, id2):
 
     if request.method == 'PUT':
         # Si paso, es porque la hamburguesa existe, entonces verificamos que el ingrediente también
-        if id2 in hamburguesa.id_ingredientes:
-            return JsonResponse({'message': 'Ingrediente agregado'}, status=status.HTTP_201_CREATED)
-        hamburguesa.ingredientes.append({"path": PATH + f'{id2}'})
-        hamburguesa.id_ingredientes.append(id2)
+        serializer = HamburguesaSerializer(hamburguesa)
+        if id2 in serializer.data["ingredientes"]:
+             return JsonResponse({'message': 'Ingrediente agregado'}, status=status.HTTP_201_CREATED)
+        hamburguesa.ingredientes.add(ingrediente)
         return JsonResponse({'message': 'Ingrediente agregado'}, status=status.HTTP_201_CREATED)
 
     elif request.method == 'DELETE':
-        # Si paso, es porque la hamburguesa existe, entonces verificamos que el ingrediente también
-        if id2 not in hamburguesa.id_ingredientes:
-            return JsonResponse({'message': 'Ingrediente inexistente en la hamburguesa'}, status=status.HTTP_404_NOT_FOUND)
-        indice = hamburguesa.id_ingredientes.index(id2)
-        hamburguesa.ingredientes.pop(indice)
-        hamburguesa.id_ingredientes.remove(id2)
+        serializer = HamburguesaSerializer(hamburguesa)
+        if id2 not in serializer.data["ingredientes"]:
+            return JsonResponse({'message': 'Ingrediente inexistente en la hamburguesa'},status=status.HTTP_404_NOT_FOUND)
+        hamburguesa.ingredientes.remove(ingrediente)
+        print(serializer.data["ingredientes"])
         return JsonResponse({'message': 'Ingrediente retirado'}, status=status.HTTP_200_OK)
 
 
