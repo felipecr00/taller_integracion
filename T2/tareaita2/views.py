@@ -16,7 +16,7 @@ PATH = 'https://tarea2-01.herokuapp.com/api/ingrediente/'
 @api_view(['GET', 'POST'])
 def hamburguesa_list(request):
     """
-    Listamos todas las hamburguesas
+        Listamos todas las hamburguesas
     """
     if request.method == 'GET':
         hamburguesa = Hamburguesa.objects.all()
@@ -135,6 +135,13 @@ def ingrediente_detail(request, pk):
         return Response(serializer.data)
 
     elif request.method == 'DELETE':
+        hamburguesa = Hamburguesa.objects.all()
+        serializer = HamburguesaSerializer(hamburguesa, many=True)
+        ing_all = []
+        for burger in serializer.data:
+            ing_all += burger["ingredientes"]
+        if pk in ing_all:
+            return Response({'message': 'Ingrediente no se puede borrar, se encuentra presente en una hamburguesa'}, status=status.HTTP_200_OK)
         ingrediente.delete()
         return Response({'message': 'Ingrediente eliminado'}, status=status.HTTP_200_OK)
 
